@@ -1,3 +1,12 @@
+DROP TABLE IF EXISTS PRICE;
+DROP TABLE IF EXISTS BRAND;
+
+CREATE TABLE IF NOT EXISTS BRAND (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255)
+);
+INSERT INTO BRAND (id, name) VALUES (1, 'ZARA');
+
 CREATE TABLE IF NOT EXISTS PRICE (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     brand_id BIGINT,
@@ -7,7 +16,8 @@ CREATE TABLE IF NOT EXISTS PRICE (
     price DOUBLE,
     currency VARCHAR(255),
     start_date TIMESTAMP,
-    end_date TIMESTAMP
+    end_date TIMESTAMP,
+    FOREIGN KEY (brand_id) REFERENCES BRAND(id)
 );
 INSERT INTO PRICE (brand_id, product_id, price_list, priority, price, currency, start_date, end_date)
 VALUES (1, 35455, 1, 0, 35.50, 'EUR', '2020-06-14T00:00:00', '2020-12-31T23:59:59');
