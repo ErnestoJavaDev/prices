@@ -1,10 +1,10 @@
 package com.shop.pricing.domain.repository;
 
-import com.shop.pricing.domain.model.Price;
+import com.shop.pricing.infrastructure.dto.PriceEntity;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 
 public interface PriceRepository {
-    Optional<Price> findPrice(Long brandId, Long productId, LocalDateTime date);
+    List<PriceEntity> findPrice(Long brandId, Long productId, LocalDateTime date);
 }

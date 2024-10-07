@@ -5,12 +5,16 @@ import com.shop.pricing.application.dto.PriceServiceResponse;
 import com.shop.pricing.domain.exception.PriceException;
 import com.shop.pricing.domain.model.Price;
 import com.shop.pricing.domain.repository.PriceRepository;
+import com.shop.pricing.infrastructure.dto.PriceEntity;
 import com.shop.pricing.infrastructure.mapper.PriceMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.shop.pricing.utils.DataTests.*;
@@ -33,12 +37,12 @@ public class PriceServiceTests {
     @Test
     public void givenServiceRequestShouldReturnValidResponse() {
         PriceServiceRequest serviceRequest = generateServiceRequest();
-        Price price = generatePrice();
-        Optional<Price> optionalPrice = Optional.of(price);
+        PriceEntity price = generatePriceEntity();
+        List<PriceEntity> prices = Arrays.asList(price);
         PriceServiceResponse serviceResponse = generateServiceResponse();
 
         when(repository.findPrice(serviceRequest.getBrandId(), serviceRequest.getProductId(), serviceRequest.getCurrentTime()))
-                .thenReturn(optionalPrice);
+                .thenReturn(prices);
         when(mapper.toServiceResponse(price)).thenReturn(serviceResponse);
 
         PriceServiceResponse response = service.searchPrice(serviceRequest);
@@ -49,17 +53,41 @@ public class PriceServiceTests {
         assertEquals(response.getPriceList(), serviceResponse.getPriceList());
         assertEquals(response.getStartDate(), serviceResponse.getStartDate());
         assertEquals(response.getEndDate(), serviceResponse.getEndDate());
+    }
 
+    @Test
+    public void givenServiceRequestMultipleChoiceShouldReturnValidResponse() {
+        PriceServiceRequest serviceRequest = generateServiceRequest();
+        PriceEntity price = generatePriceEntity();
+        price.setPriority(0);
+        PriceEntity price2 = generatePriceEntity();
+        price2.setPrice(66.65);
+        List<PriceEntity> prices = Arrays.asList(price, price2);
+        PriceServiceResponse serviceResponse = generateServiceResponse();
+        serviceResponse.setPrice(66.65);
+
+        when(repository.findPrice(serviceRequest.getBrandId(), serviceRequest.getProductId(), serviceRequest.getCurrentTime()))
+                .thenReturn(prices);
+        when(mapper.toServiceResponse(price2)).thenReturn(serviceResponse);
+
+        PriceServiceResponse response = service.searchPrice(serviceRequest);
+
+        assertEquals(response.getBrandId(), price2.getBrandId());
+        assertEquals(response.getProductId(), price2.getProductId());
+        assertEquals(response.getPrice(), price2.getPrice());
+        assertEquals(response.getPriceList(), price2.getPriceList());
+        assertEquals(response.getStartDate(), price2.getStartDate());
+        assertEquals(response.getEndDate(), price2.getEndDate());
     }
 
 
     @Test
     public void givenServiceRequestShouldReturnException() {
         PriceServiceRequest serviceRequest = generateServiceRequest();
-        Optional<Price> optionalPrice = Optional.empty();
+        List<PriceEntity> prices = new ArrayList<>();
 
         when(repository.findPrice(serviceRequest.getBrandId(), serviceRequest.getProductId(), serviceRequest.getCurrentTime()))
-                .thenReturn(optionalPrice);
+                .thenReturn(prices);
 
         assertThrows(PriceException.class, () -> {
             service.searchPrice(serviceRequest);
