@@ -1,5 +1,6 @@
 package com.shop.pricing.infrastructure.exception;
 
+import com.shop.pricing.domain.exception.PriceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -12,6 +13,14 @@ import java.time.format.DateTimeParseException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(PriceException.class)
+    public ResponseEntity<ErrorResponse> handlePriceException(PriceException ex) {
+        String errorMessage = String.format(ex.getMessage());
+
+        return new ResponseEntity<>(new ErrorResponse(errorMessage, "404", ex.getMessage()),
+                HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ErrorResponse> handleMissingParams(MissingServletRequestParameterException ex) {
