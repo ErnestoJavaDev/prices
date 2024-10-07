@@ -37,8 +37,8 @@ public class PriceServiceTests {
     @Test
     public void givenServiceRequestShouldReturnValidResponse() {
         PriceServiceRequest serviceRequest = generateServiceRequest();
-        PriceEntity price = generatePriceEntity();
-        List<PriceEntity> prices = Arrays.asList(price);
+        Price price = generatePrice();
+        List<Price> prices = Arrays.asList(price);
         PriceServiceResponse serviceResponse = generateServiceResponse();
 
         when(repository.findPrice(serviceRequest.getBrandId(), serviceRequest.getProductId(), serviceRequest.getCurrentTime()))
@@ -58,11 +58,11 @@ public class PriceServiceTests {
     @Test
     public void givenServiceRequestMultipleChoiceShouldReturnValidResponse() {
         PriceServiceRequest serviceRequest = generateServiceRequest();
-        PriceEntity price = generatePriceEntity();
+        Price price = generatePrice();
         price.setPriority(0);
-        PriceEntity price2 = generatePriceEntity();
+        Price price2 = generatePrice();
         price2.setPrice(66.65);
-        List<PriceEntity> prices = Arrays.asList(price, price2);
+        List<Price> prices = Arrays.asList(price, price2);
         PriceServiceResponse serviceResponse = generateServiceResponse();
         serviceResponse.setPrice(66.65);
 
@@ -84,7 +84,7 @@ public class PriceServiceTests {
     @Test
     public void givenServiceRequestShouldReturnException() {
         PriceServiceRequest serviceRequest = generateServiceRequest();
-        List<PriceEntity> prices = new ArrayList<>();
+        List<Price> prices = new ArrayList<>();
 
         when(repository.findPrice(serviceRequest.getBrandId(), serviceRequest.getProductId(), serviceRequest.getCurrentTime()))
                 .thenReturn(prices);

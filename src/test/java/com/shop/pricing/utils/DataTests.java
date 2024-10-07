@@ -42,7 +42,7 @@ public class DataTests {
         return new PriceInfrastructureResponse(BRAND_ID, PRODUCT_ID, PRICE_LIST, PRICE, START_DATE, END_DATE);
     }
 
-    public static PriceEntity generatePriceEntity() {
-        return new PriceEntity(ID, BRAND_ID, PRODUCT_ID, PRICE_LIST, PRIORITY, PRICE, CURRENCY, START_DATE, END_DATE);
+    public static Price generatePrice() {
+        return new Price(ID, BRAND_ID, PRODUCT_ID, PRICE_LIST, PRIORITY, PRICE, CURRENCY, START_DATE, END_DATE);
     }
 }
