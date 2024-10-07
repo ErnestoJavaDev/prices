@@ -107,4 +107,16 @@ public class PriceIntegrationTests {
                 .andExpect(jsonPath("$.message").value("Cant parse dateTime as date"))
                 .andExpect(jsonPath("$.errorCode").value("400"));
     }
+
+    @Test
+    public void testEmptyPricesReturnPriceException() throws Exception {
+        mockMvc.perform(get(URL)
+                        .param("brandId", BRAND_ID)
+                        .param("productId", PRODUCT_ID)
+                        .param("dateTime", "2025-10-01T10:00:00")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Price list is empty"))
+                .andExpect(jsonPath("$.errorCode").value("404"));
+    }
 }
