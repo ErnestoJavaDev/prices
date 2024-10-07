@@ -5,10 +5,13 @@ import com.shop.pricing.application.dto.PriceServiceResponse;
 import com.shop.pricing.domain.exception.PriceException;
 import com.shop.pricing.domain.model.Price;
 import com.shop.pricing.domain.repository.PriceRepository;
+import com.shop.pricing.infrastructure.dto.PriceEntity;
 import com.shop.pricing.infrastructure.mapper.PriceMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,12 +23,15 @@ public class PriceService {
 
     public PriceServiceResponse searchPrice(PriceServiceRequest serviceRequest) {
 
-        Price repositoryResponse =
+        List<PriceEntity> repositoryResponse =
                 repository.findPrice(
                         serviceRequest.getBrandId(),
                         serviceRequest.getProductId(),
                         serviceRequest.getCurrentTime()
-                ).orElseThrow(() -> new PriceException("Price list no match with similar results"));
-        return mapper.toServiceResponse(repositoryResponse);
+                );
+        PriceEntity price = repositoryResponse.stream()
+                .max(Comparator.comparingInt(PriceEntity::getPriority))
+                .orElseThrow(() -> new PriceException("Price list is empty"));
+        return mapper.toServiceResponse(price);
     }
 }

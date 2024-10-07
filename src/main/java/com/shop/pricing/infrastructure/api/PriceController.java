@@ -21,7 +21,7 @@ public class PriceController {
     private final PriceService service;
     private final PriceMapper mapper;
 
-    @GetMapping("/search/price")
+    @GetMapping("/search/prices")
     public ResponseEntity<PriceInfrastructureResponse> getPrice(@RequestParam Long brandId, @RequestParam Long productId, @RequestParam String dateTime) {
 
         LocalDateTime currentTime = LocalDateTime.parse(dateTime);
