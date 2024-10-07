@@ -23,14 +23,14 @@ public class PriceService {
 
     public PriceServiceResponse searchPrice(PriceServiceRequest serviceRequest) {
 
-        List<PriceEntity> repositoryResponse =
+        List<Price> repositoryResponse =
                 repository.findPrice(
                         serviceRequest.getBrandId(),
                         serviceRequest.getProductId(),
                         serviceRequest.getCurrentTime()
                 );
-        PriceEntity price = repositoryResponse.stream()
-                .max(Comparator.comparingInt(PriceEntity::getPriority))
+        Price price = repositoryResponse.stream()
+                .max(Comparator.comparingInt(Price::getPriority))
                 .orElseThrow(() -> new PriceException("Price list is empty"));
         return mapper.toServiceResponse(price);
     }

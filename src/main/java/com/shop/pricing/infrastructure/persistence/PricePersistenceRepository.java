@@ -11,8 +11,7 @@ public interface PricePersistenceRepository extends JpaRepository<PriceEntity, L
     @Query("SELECT p FROM PriceEntity p " +
             "WHERE p.brandId = :brandId " +
             "AND p.productId = :productId " +
-            "AND :currentDate BETWEEN p.startDate AND p.endDate " +
-            "ORDER BY p.priority DESC")
+            "AND :currentDate BETWEEN p.startDate AND p.endDate")
     List<PriceEntity> findByBrandIdAndProductIdAndCurrentDate(
             Long brandId, Long productId, LocalDateTime currentDate);
 }

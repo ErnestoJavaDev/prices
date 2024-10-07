@@ -2,6 +2,7 @@ package com.shop.pricing.infrastructure.mapper;
 
 import com.shop.pricing.application.dto.PriceServiceRequest;
 import com.shop.pricing.application.dto.PriceServiceResponse;
+import com.shop.pricing.domain.model.Price;
 import com.shop.pricing.infrastructure.dto.PriceEntity;
 import com.shop.pricing.infrastructure.dto.PriceInfrastructureRequest;
 import com.shop.pricing.infrastructure.dto.PriceInfrastructureResponse;
@@ -17,5 +18,6 @@ public interface PriceMapper {
     PriceInfrastructureRequest toInfrastructureRequest(Long brandId, Long productId, LocalDateTime currentTime);
     PriceServiceRequest toServiceRequest(PriceInfrastructureRequest infrastructureRequest);
     PriceInfrastructureResponse toInfrastructureResponse(PriceServiceResponse serviceResponse);
-    PriceServiceResponse toServiceResponse(PriceEntity repositoryResponse);
+    PriceServiceResponse toServiceResponse(Price repositoryResponse);
+    Price toPrice(PriceEntity priceEntity);
 }
