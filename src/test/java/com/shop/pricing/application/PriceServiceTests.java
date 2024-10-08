@@ -5,7 +5,6 @@ import com.shop.pricing.application.dto.PriceServiceResponse;
 import com.shop.pricing.domain.exception.PriceException;
 import com.shop.pricing.domain.model.Price;
 import com.shop.pricing.domain.repository.PriceRepository;
-import com.shop.pricing.infrastructure.dto.PriceEntity;
 import com.shop.pricing.infrastructure.mapper.PriceMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static com.shop.pricing.utils.DataTests.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
