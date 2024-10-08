@@ -3,15 +3,12 @@ package com.shop.pricing.utils;
 import com.shop.pricing.application.dto.PriceServiceRequest;
 import com.shop.pricing.application.dto.PriceServiceResponse;
 import com.shop.pricing.domain.model.Price;
-import com.shop.pricing.infrastructure.dto.PriceEntity;
 import com.shop.pricing.infrastructure.dto.PriceInfrastructureRequest;
 import com.shop.pricing.infrastructure.dto.PriceInfrastructureResponse;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.UUID;
 
 public class DataTests {
 
